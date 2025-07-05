@@ -19,7 +19,8 @@ local env_var_nvim_theme = os.getenv 'NVIM_THEME' or default_color_scheme
 local themes = {
   nord = 'plugins.themes.nord',
   cyberdream = 'plugins.themes.cyberdream',
-  tokyonight = 'plugins.themes.tokyonight'
+  tokyonight = 'plugins.themes.tokyonight',
+  astrotheme = 'plugins.themes.astrotheme'
 }
 
 require('lazy').setup({
