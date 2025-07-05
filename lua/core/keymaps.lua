@@ -95,9 +95,6 @@ vim.keymap.set('v', '<A-k>', ':m .-2<CR>==v', opts)
 -- Keep last yanked when pasting
 vim.keymap.set('v', 'p', '"_dP', opts)
 
--- Replace word under cursor
-vim.keymap.set('n', '<leader>j', '*``cgn', opts)
-
 -- Explicitly yank to system clipboard (highlighted and entire row)
 vim.keymap.set({ 'n', 'v' }, '<leader>y', [["+y]])
 vim.keymap.set('n', '<leader>Y', [["+Y]])
@@ -134,3 +131,11 @@ vim.keymap.set("n", "]g", "<cmd>Gitsigns next_hunk<CR>", { desc = "Next git hunk
 vim.keymap.set("n", "[g", "<cmd>Gitsigns prev_hunk<CR>", { desc = "Previous git hunk" })
 vim.keymap.set("n", "<leader>gis", "<cmd>Gitsigns stage_hunk<CR>", { desc = "Stage git hunk" })
 vim.keymap.set("n", "<leader>gir", "<cmd>Gitsigns reset_hunk<CR>", { desc = "Reset git hunk" })
+
+-- Neotree reveal and close
+vim.keymap.set("n", "<leader>e", "<Cmd>Neotree reveal<CR>")
+vim.keymap.set("n", "<leader>c", "<Cmd>Neotree close<CR>")
+
+-- move cursor windows com Ctrl-j/k
+vim.keymap.set('n', '<C-j>', '<C-w>j', { noremap = true, silent = true, desc = 'Window below' })
+vim.keymap.set('n', '<C-k>', '<C-w>k', { noremap = true, silent = true, desc = 'Window above' })
