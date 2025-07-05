@@ -31,7 +31,7 @@ require('lazy').setup({
   require 'plugins.treesitter',
   require 'plugins.telescope',
   require 'plugins.autocompletion',
-  require 'plugins.none',
+  require 'plugins.none-ls',
   require 'plugins.lsp',
   require 'plugins.comment',
   require 'plugins.misc',
@@ -39,7 +39,8 @@ require('lazy').setup({
   require 'plugins.gitsigns',
   require 'plugins.alpha',
   require 'plugins.indent-blankline',
-  require 'plugins.which-key'
+  require 'plugins.which-key',
+  require 'plugins.scrollbar'
 }, {
   ui = {
     -- If you have a Nerd Font, set icons to an empty table which will use the

@@ -68,8 +68,6 @@ vim.keymap.set('n', '<leader>se', '<C-w>=', opts)     -- make split windows equa
 vim.keymap.set('n', '<leader>xs', ':close<CR>', opts) -- close current split window
 
 -- Navigate between splits
-vim.keymap.set('n', '<C-k>', ':wincmd k<CR>', opts)
-vim.keymap.set('n', '<C-j>', ':wincmd j<CR>', opts)
 vim.keymap.set('n', '<C-h>', ':wincmd h<CR>', opts)
 vim.keymap.set('n', '<C-l>', ':wincmd l<CR>', opts)
 
@@ -129,3 +127,10 @@ vim.keymap.set('n', '<leader>sl', ':source .session.vim<CR>', { noremap = true, 
 
 -- limpar o highlight sem precisar digitar :noh:
 vim.keymap.set('n', '<Esc>', '<Esc>:nohlsearch<CR>', { noremap = true, silent = true })
+
+-- Gitsigns
+vim.keymap.set("n", "<leader>gp", "<cmd>Gitsigns preview_hunk<CR>", { desc = "Preview git hunk" })
+vim.keymap.set("n", "]g", "<cmd>Gitsigns next_hunk<CR>", { desc = "Next git hunk" })
+vim.keymap.set("n", "[g", "<cmd>Gitsigns prev_hunk<CR>", { desc = "Previous git hunk" })
+vim.keymap.set("n", "<leader>gis", "<cmd>Gitsigns stage_hunk<CR>", { desc = "Stage git hunk" })
+vim.keymap.set("n", "<leader>gir", "<cmd>Gitsigns reset_hunk<CR>", { desc = "Reset git hunk" })
