@@ -6,6 +6,7 @@ return {
     'jayp0521/mason-null-ls.nvim', -- ensure dependencies are installed
   },
   config = function()
+    _G.autoformat_enabled = true
     local null_ls = require('null-ls')
     local formatting = null_ls.builtins.formatting   -- to setup formatters
     local diagnostics = null_ls.builtins.diagnostics -- to setup linters
@@ -32,7 +33,6 @@ return {
       -- require('none-ls.formatting.ruff').with({ extra_args = { '--extend-select', 'I' } }),
       -- require('none-ls.formatting.ruff_format'),
     }
-
     local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
     null_ls.setup({
       -- debug = true, -- Enable debug mode. Inspect logs with :NullLsLog.
@@ -45,11 +45,17 @@ return {
             group = augroup,
             buffer = bufnr,
             callback = function()
-              vim.lsp.buf.format({ async = false })
+              if _G.autoformat_enabled then
+                vim.lsp.buf.format({ async = false })
+              end
             end,
           })
         end
       end,
     })
+    vim.keymap.set("n", "<leader>uf", function()
+      _G.autoformat_enabled = not _G.autoformat_enabled
+      vim.notify("Autoformat on save: " .. (_G.autoformat_enabled and "enabled" or "disabled"))
+    end, { desc = "Toggle autoformat on save" })
   end,
 }
