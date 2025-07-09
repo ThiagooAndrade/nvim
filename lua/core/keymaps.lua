@@ -139,3 +139,6 @@ vim.keymap.set("n", "<leader>c", "<Cmd>Neotree close<CR>")
 -- move cursor windows com Ctrl-j/k
 vim.keymap.set('n', '<C-j>', '<C-w>j', { noremap = true, silent = true, desc = 'Window below' })
 vim.keymap.set('n', '<C-k>', '<C-w>k', { noremap = true, silent = true, desc = 'Window above' })
+
+-- desbind esc key
+vim.keymap.set("i", "<Esc>", "<Nop>", { noremap = true })

@@ -12,7 +12,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- Import color theme based on environment variable NVIM_THEME
-local default_color_scheme = 'tokyonight'
+local default_color_scheme = 'kanagawa'
 local env_var_nvim_theme = os.getenv 'NVIM_THEME' or default_color_scheme
 
 -- Define a table of theme modules
@@ -20,7 +20,8 @@ local themes = {
   nord = 'plugins.themes.nord',
   cyberdream = 'plugins.themes.cyberdream',
   tokyonight = 'plugins.themes.tokyonight',
-  astrotheme = 'plugins.themes.astrotheme'
+  astrotheme = 'plugins.themes.astrotheme',
+  kanagawa = 'plugins.themes.kanagawa'
 }
 
 require('lazy').setup({
