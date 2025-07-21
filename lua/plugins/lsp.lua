@@ -26,6 +26,84 @@ return { -- LSP Configuration & Plugins
     },
   },
   config = function()
+    local lspconfig = require("lspconfig")
+
+    local function get_vue_plugin_path()
+      -- Ajuste o caminho abaixo para onde seu vue-language-server está instalado
+      local home = vim.env.HOME
+      return home .. "/.npm/lib/node_modules/@vue/language-server/node_modules/@vue/typescript-plugin"
+    end
+
+    -- Capabilities para autocompletion com nvim-cmp (se estiver usando)
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    local cmp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+    if cmp_ok then
+      capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
+    end
+
+    -- Define os servidores e suas configurações
+    local servers = {
+      volar = {
+        init_options = {
+          vue = {
+            hybridMode = true,
+          },
+        },
+        filetypes = { "typescript", "javascript", "vue" },
+        settings = {
+          vtsls = {
+            tsserver = {
+              globalPlugins = {
+                {
+                  name = "@vue/typescript-plugin",
+                  location = get_vue_plugin_path(),
+                  languages = { "vue" },
+                  configNamespace = "typescript",
+                  enableForWorkspaceTypeScriptVersions = true,
+                },
+              },
+            },
+          },
+        },
+        capabilities = capabilities,
+      },
+      lua_ls = {
+        settings = {
+          Lua = {
+            runtime = { version = 'LuaJIT' },
+            workspace = {
+              checkThirdParty = false,
+              library = {
+                '${3rd}/luv/library',
+                unpack(vim.api.nvim_get_runtime_file('', true)),
+              },
+            },
+            completion = {
+              callSnippet = 'Replace',
+            },
+            telemetry = { enable = false },
+            diagnostics = { disable = { 'missing-fields' } },
+          },
+        },
+      },
+      jsonls = {},
+      sqlls = {},
+      tailwindcss = {
+        filetypes = {
+          "html", "css", "scss", "javascript", "javascriptreact", "typescriptreact", "vue"
+        },
+      },
+      html = {
+        filetypes = {
+          'html',            -- arquivos HTML padrão
+          'typescriptreact', -- arquivos .tsx
+          'javascriptreact', -- arquivos .jsx
+          'angular',         -- (Angular geralmente usa HTML puro)
+          'twig', 'hbs'      -- se estiver usando esses
+        }
+      },
+    }
+
     vim.api.nvim_create_autocmd('LspAttach', {
       group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
       -- Create a function that lets us more easily define mappings specific LSP related items.
@@ -105,87 +183,16 @@ return { -- LSP Configuration & Plugins
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
-    -- Enable the following language servers
-    local servers = {
-      lua_ls = {
-        -- cmd = {...},
-        -- filetypes { ...},
-        -- capabilities = {},
-        settings = {
-          Lua = {
-            runtime = { version = 'LuaJIT' },
-            workspace = {
-              checkThirdParty = false,
-              -- Tells lua_ls where to find all the Lua files that you have loaded
-              -- for your neovim configuration.
-              library = {
-                '${3rd}/luv/library',
-                unpack(vim.api.nvim_get_runtime_file('', true)),
-              },
-              -- If lua_ls is really slow on your computer, you can try this instead:
-              -- library = { vim.env.VIMRUNTIME },
-            },
-            completion = {
-              callSnippet = 'Replace',
-            },
-            telemetry = { enable = false },
-            diagnostics = { disable = { 'missing-fields' } },
-          },
-        },
-      },
-      -- pylsp = {
-      --   settings = {
-      --     pylsp = {
-      --       plugins = {
-      --         pyflakes = { enabled = false },
-      --         pycodestyle = { enabled = false },
-      --         autopep8 = { enabled = false },
-      --         yapf = { enabled = false },
-      --         mccabe = { enabled = false },
-      --         pylsp_mypy = { enabled = false },
-      --         pylsp_black = { enabled = false },
-      --         pylsp_isort = { enabled = false },
-      --       },
-      --     },
-      --   },
-      -- },
-      -- basedpyright = {
-      --   -- Config options: https://github.com/DetachHead/basedpyright/blob/main/docs/settings.md
-      --   settings = {
-      --     basedpyright = {
-      --       disableOrganizeImports = true, -- Using Ruff's import organizer
-      --       disableLanguageServices = false,
-      --       analysis = {
-      --         ignore = { '*' },                 -- Ignore all files for analysis to exclusively use Ruff for linting
-      --         typeCheckingMode = 'off',
-      --         diagnosticMode = 'openFilesOnly', -- Only analyze open files
-      --         useLibraryCodeForTypes = true,
-      --         autoImportCompletions = true,     -- whether pyright offers auto-import completions
-      --       },
-      --     },
-      --   },
-      -- },
-      jsonls = {},
-      sqlls = {},
-      -- terraformls = {},
-      -- yamlls = {},
-      -- bashls = {},
-      -- dockerls = {},
-      -- docker_compose_language_service = {},
-      tailwindcss = {},
-      -- graphql = {},
-      html = { filetypes = { 'html', 'twig', 'hbs' } },
-      -- cssls = {},
-      -- ltex = {},
-      -- texlab = {},
-    }
 
     -- Ensure the servers and tools above are installed
     require('mason').setup()
 
     -- You can add other tools here that you want Mason to install
     -- for you, so that they are available from within Neovim.
-    local ensure_installed = vim.tbl_keys(servers or {})
+    local ensure_installed = vim.tbl_filter(function(server)
+      return server ~= "volar" -- ignora volar
+    end, vim.tbl_keys(servers or {}))
+
     vim.list_extend(ensure_installed, {
       'stylua', -- Used to format lua code
     })
