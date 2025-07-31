@@ -26,47 +26,8 @@ return { -- LSP Configuration & Plugins
     },
   },
   config = function()
-    local lspconfig = require("lspconfig")
-
-    local function get_vue_plugin_path()
-      -- Ajuste o caminho abaixo para onde seu vue-language-server está instalado
-      local home = vim.env.HOME
-      return home .. "/.npm/lib/node_modules/@vue/language-server/node_modules/@vue/typescript-plugin"
-    end
-
-    -- Capabilities para autocompletion com nvim-cmp (se estiver usando)
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    local cmp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-    if cmp_ok then
-      capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
-    end
-
     -- Define os servidores e suas configurações
     local servers = {
-      volar = {
-        init_options = {
-          vue = {
-            hybridMode = true,
-          },
-        },
-        filetypes = { "typescript", "javascript", "vue" },
-        settings = {
-          vtsls = {
-            tsserver = {
-              globalPlugins = {
-                {
-                  name = "@vue/typescript-plugin",
-                  location = get_vue_plugin_path(),
-                  languages = { "vue" },
-                  configNamespace = "typescript",
-                  enableForWorkspaceTypeScriptVersions = true,
-                },
-              },
-            },
-          },
-        },
-        capabilities = capabilities,
-      },
       lua_ls = {
         settings = {
           Lua = {
@@ -108,6 +69,7 @@ return { -- LSP Configuration & Plugins
       group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
       -- Create a function that lets us more easily define mappings specific LSP related items.
       -- It sets the mode, buffer and description for us each time.
+
       callback = function(event)
         local map = function(keys, func, desc)
           vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
@@ -166,6 +128,10 @@ return { -- LSP Configuration & Plugins
         --
         -- When you move your cursor, the highlights will be cleared (the second autocommand).
         local client = vim.lsp.get_client_by_id(event.data.client_id)
+        -- if client and client.server_capabilities.documentFormattingProvider then
+        --   -- Desabilita qualquer format on save automático
+        --   vim.api.nvim_clear_autocmds({ group = "format_on_save", buffer = args.buf })
+        -- end
         if client and client.server_capabilities.documentHighlightProvider then
           vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
             buffer = event.buf,
@@ -180,22 +146,9 @@ return { -- LSP Configuration & Plugins
       end,
     })
 
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
-
-
     -- Ensure the servers and tools above are installed
     require('mason').setup()
 
-    -- You can add other tools here that you want Mason to install
-    -- for you, so that they are available from within Neovim.
-    local ensure_installed = vim.tbl_filter(function(server)
-      return server ~= "volar" -- ignora volar
-    end, vim.tbl_keys(servers or {}))
-
-    vim.list_extend(ensure_installed, {
-      'stylua', -- Used to format lua code
-    })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
     require('mason-lspconfig').setup {

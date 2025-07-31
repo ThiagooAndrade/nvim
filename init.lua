@@ -1,5 +1,7 @@
 require 'core.keymaps'
 require 'core.options'
+require 'core.lsp'
+require 'core.mason-path'
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -41,7 +43,7 @@ require('lazy').setup({
   require 'plugins.alpha',
   require 'plugins.indent-blankline',
   require 'plugins.which-key',
-  require 'plugins.scrollbar'
+  require 'plugins.scrollbar',
 }, {
   ui = {
     -- If you have a Nerd Font, set icons to an empty table which will use the
