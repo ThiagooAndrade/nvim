@@ -28,6 +28,15 @@ return { -- LSP Configuration & Plugins
   config = function()
     -- Define os servidores e suas configurações
     local servers = {
+      vue_ls = {
+        cmd = { "vue-language-server", "--stdio" },
+        filetypes = { "vue", "javascript", "typescript", "javascriptreact", "typescriptreact" },
+        init_options = {
+          -- typescript = {
+          --   tsdk = "/caminho/para/sua/instalacao/do/typescript/lib" -- opcional, útil para type checking
+          -- }
+        },
+      },
       lua_ls = {
         settings = {
           Lua = {
@@ -153,6 +162,12 @@ return { -- LSP Configuration & Plugins
 
     require('mason-lspconfig').setup {
       handlers = {
+        -- Handler específico para Vue
+        -- ["vue_ls"] = function()
+        --   local server = servers["vue_ls"]
+        --   server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+        --   require("lspconfig").vue_ls.setup(server)
+        -- end,
         function(server_name)
           local server = servers[server_name] or {}
           -- This handles overriding only values explicitly passed

@@ -142,3 +142,15 @@ vim.keymap.set('n', '<C-k>', '<C-w>k', { noremap = true, silent = true, desc = '
 
 -- desbind esc key
 vim.keymap.set("i", "<Esc>", "<Nop>", { noremap = true })
+
+vim.keymap.set("v", "<leader>f", function()
+  local start_pos = vim.api.nvim_buf_get_mark(0, "<")
+  local end_pos = vim.api.nvim_buf_get_mark(0, ">")
+  vim.lsp.buf.format({
+    range = {
+      ["start"] = { start_pos[1], start_pos[2] },
+      ["end"] = { end_pos[1], end_pos[2] + 1 },
+    },
+  })
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", false)
+end, { desc = "Format selected range", noremap = true, silent = true })

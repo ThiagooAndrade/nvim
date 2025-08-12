@@ -14,7 +14,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- Import color theme based on environment variable NVIM_THEME
-local default_color_scheme = 'kanagawa'
+local default_color_scheme = 'tokyonight'
 local env_var_nvim_theme = os.getenv 'NVIM_THEME' or default_color_scheme
 
 -- Define a table of theme modules
@@ -44,6 +44,7 @@ require('lazy').setup({
   require 'plugins.indent-blankline',
   require 'plugins.which-key',
   require 'plugins.scrollbar',
+  require 'plugins.vim-visual-multi'
 }, {
   ui = {
     -- If you have a Nerd Font, set icons to an empty table which will use the

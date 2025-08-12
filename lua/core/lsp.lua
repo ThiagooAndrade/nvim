@@ -1,3 +1,8 @@
+-- local lspConfig = require("lspconfig")
+-- local vueLspConfig = require 'lsp.vue-ls'
+
+-- lspConfig.vue_ls.setup(vueLspConfig)
+
 -- Mason PATH is handled by core.mason-path
 vim.lsp.enable({
   "lua-ls",
@@ -11,6 +16,7 @@ vim.lsp.enable({
   "css-ls",
   "vue-ls",
 })
+
 
 -- LSP servers are automatically managed by Mason
 -- Use :MasonVerify to check which tools are Mason-managed
@@ -268,7 +274,7 @@ local function lsp_status_short()
   local clients = vim.lsp.get_clients({ bufnr = bufnr })
 
   if #clients == 0 then
-    return ""     -- Return empty string when no LSP
+    return "" -- Return empty string when no LSP
   end
 
   local names = {}
@@ -353,14 +359,14 @@ _G.linter_status = safe_linter_status
 
 -- THEN set the statusline
 vim.opt.statusline = table.concat({
-  "%{v:lua.git_branch()}",         -- Git branch
-  "%f",                            -- File name
-  "%m",                            -- Modified flag
-  "%r",                            -- Readonly flag
-  "%=",                            -- Right align
-  "%{v:lua.linter_status()}",      -- Linter status
-  "%{v:lua.formatter_status()}",   -- Formatter status
-  "%{v:lua.lsp_status()}",         -- LSP status
-  " %l:%c",                        -- Line:Column
-  " %p%%"                          -- Percentage through file
+  "%{v:lua.git_branch()}",       -- Git branch
+  "%f",                          -- File name
+  "%m",                          -- Modified flag
+  "%r",                          -- Readonly flag
+  "%=",                          -- Right align
+  "%{v:lua.linter_status()}",    -- Linter status
+  "%{v:lua.formatter_status()}", -- Formatter status
+  "%{v:lua.lsp_status()}",       -- LSP status
+  " %l:%c",                      -- Line:Column
+  " %p%%"                        -- Percentage through file
 }, " ")
