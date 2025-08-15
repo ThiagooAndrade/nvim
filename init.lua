@@ -1,17 +1,8 @@
+require 'core.lazy'
 require 'core.keymaps'
 require 'core.options'
 require 'core.lsp'
 require 'core.mason-path'
-
-local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
-  local out = vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
-  if vim.v.shell_error ~= 0 then
-    error('Error cloning lazy.nvim:\n' .. out)
-  end
-end
-vim.opt.rtp:prepend(lazypath)
 
 -- Import color theme based on environment variable NVIM_THEME
 local default_color_scheme = 'tokyonight'
@@ -46,23 +37,45 @@ require('lazy').setup({
   require 'plugins.scrollbar',
   require 'plugins.vim-visual-multi'
 }, {
+  install = {
+    missing = true,
+  },
+  checker = {
+    enabled = true,
+    notify = false,
+  },
+  change_detection = {
+    enabled = true,
+    notify = false,
+  },
   ui = {
     -- If you have a Nerd Font, set icons to an empty table which will use the
     -- default lazy.nvim defined Nerd Font icons otherwise define a unicode icons table
     icons = vim.g.have_nerd_font and {} or {
-      cmd = '⌘',
-      config = '🛠',
-      event = '📅',
-      ft = '📂',
-      init = '⚙',
-      keys = '🗝',
-      plugin = '🔌',
-      runtime = '💻',
-      require = '🌙',
-      source = '📄',
-      start = '🚀',
-      task = '📌',
-      lazy = '💤 ',
+      -- cmd = '⌘',
+      -- config = '🛠',
+      -- event = '📅',
+      -- ft = '📂',
+      -- init = '⚙',
+      -- keys = '🗝',
+      -- plugin = '🔌',
+      -- runtime = '💻',
+      -- require = '🌙',
+      -- source = '📄',
+      -- start = '🚀',
+      -- task = '📌',
+      -- lazy = '💤 ',
+    },
+  },
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        "gzip",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
+      },
     },
   },
 })
@@ -72,7 +85,7 @@ function SetIndent(width)
   vim.opt.tabstop = width     -- Número de espaços que um <Tab> representa
   vim.opt.softtabstop = width -- Número de espaços ao digitar <Tab>
   vim.opt.shiftwidth = width  -- Número de espaços usados para indentação automática
-  vim.opt.expandtab = true    -- Usa espaços em vez de tabs reais
+  vim.opt.expandtab = false   -- Usa espaços em vez de tabs reais
   print("Indent set to " .. width .. " spaces")
 end
 
