@@ -28,16 +28,50 @@ return { -- LSP Configuration & Plugins
   config = function()
     local unpack = table.unpack or unpack;
     -- Define os servidores e suas configurações
+    local tsdk_path = "/home/thiago/.nvm/versions/node/v22.16.0/lib/node_modules/typescript/lib"
+
+    local on_attach = function(client, bufnr)
+      -- Desativa documentHighlight para este cliente
+      client.server_capabilities.documentHighlightProvider = false
+
+      -- Aqui você pode continuar suas outras configurações on_attach
+      -- Por exemplo, seus mapeamentos de tecla, etc
+    end
     local servers = {
-      vue_ls = {
-        cmd = { "vue-language-server", "--stdio" },
-        filetypes = { "vue", "javascript", "typescript", "javascriptreact", "typescriptreact" },
+      ts_ls = {
+        cmd = { "typescript-language-server", "--stdio" },
+        filetypes = {
+          "javascript",
+          "javascriptreact",
+          "javascript.jsx",
+          "typescript",
+          "typescriptreact",
+          "typescript.tsx"
+        },
         init_options = {
-          -- typescript = {
-          --   tsdk = "/caminho/para/sua/instalacao/do/typescript/lib" -- opcional, útil para type checking
-          -- }
+          typescript = {
+            tsdk = tsdk_path -- opcional, útil para type checking
+          }
         },
       },
+      -- vtsls = {
+      --   -- on_attach = on_attach,
+      --   filetypes = { "typescript", "javascript", "vue" },
+      --   init_options = {
+      --     typescript = {
+      --       tsdk = tsdk_path -- opcional, útil para type checking
+      --     }
+      --   },
+      -- },
+      -- vue_ls = {
+      --   cmd = { "vue-language-server", "--stdio" },
+      --   filetypes = { "vue", "javascript", "typescript", "javascriptreact", "typescriptreact" },
+      --   init_options = {
+      --     typescript = {
+      --       tsdk = tsdk_path -- opcional, útil para type checking
+      --     }
+      --   },
+      -- },
       lua_ls = {
         settings = {
           Lua = {
@@ -64,7 +98,7 @@ return { -- LSP Configuration & Plugins
       sqlls = {},
       tailwindcss = {
         filetypes = {
-          "html", "css", "scss", "javascript", "javascriptreact", "typescriptreact", "vue"
+          "html", "css", "scss"
         },
       },
       html = {
@@ -75,6 +109,18 @@ return { -- LSP Configuration & Plugins
           'angular',         -- (Angular geralmente usa HTML puro)
           'twig', 'hbs'      -- se estiver usando esses
         }
+      },
+      cssls = {
+        filetypes = { "vue", "css", "scss", "less" },
+        settings = {
+          css = { validate = true },
+          scss = { validate = true },
+          less = { validate = true },
+          vue = { validate = true }
+        },
+        init_options = {
+          provideFormatter = true
+        },
       },
     }
 
@@ -158,20 +204,42 @@ return { -- LSP Configuration & Plugins
         end
       end,
     })
+    local lspconfig = require("lspconfig")
+
+    lspconfig.ts_ls.setup(servers.ts_ls)
+    -- lspconfig.vue_ls.setup(servers.vue_ls)
+    lspconfig.cssls.setup(servers.cssls)
+    -- lspconfig.vtsls.setup(servers.vtsls)
 
     -- Ensure the servers and tools above are installed
     require('mason').setup()
 
-    require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+    require('mason-tool-installer').setup { ensure_installed = {
+      "ts_ls",
+      -- "vtsls",
+      -- "vue_ls",
+      "lua_ls",
+      "jsonls",
+      "html",
+      "tailwindcss",
+      "sqlls",
+      "cssls"
+    } }
 
     require('mason-lspconfig').setup {
       handlers = {
+        -- Handler específico para ts_ls
+        ["ts_ls"] = function()
+          local server = servers["ts_ls"]
+          server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+          require("lspconfig").ts_ls.setup(server)
+        end,
         -- Handler específico para Vue
-        -- ["vue_ls"] = function()
-        --   local server = servers["vue_ls"]
-        --   server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-        --   require("lspconfig").vue_ls.setup(server)
-        -- end,
+        ["vue_ls"] = function()
+          local server = servers["vue_ls"]
+          server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+          require("lspconfig").vue_ls.setup(server)
+        end,
         function(server_name)
           local server = servers[server_name] or {}
           -- This handles overriding only values explicitly passed

@@ -7,14 +7,13 @@
 vim.lsp.enable({
   "lua_ls",
   "gopls",
-  "zls",
   "ts_ls",
-  "rust-analyzer",
-  "intelephense",
   "tailwindcss",
   "html",
   "cssls",
-  "vue_ls",
+  -- "vue_ls",
+  -- "vtsls",
+  "jsonls"
 })
 
 

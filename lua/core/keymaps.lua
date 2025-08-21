@@ -161,3 +161,17 @@ vim.keymap.set("n", "<leader>tt", function()
     enable_preview = true, -- preview ao vivo dos temas
   })
 end, { desc = "Trocar tema com Telescope" })
+
+-- Função para configurar indentação
+function SetIndent(width)
+  vim.opt.tabstop = width     -- Número de espaços que um <Tab> representa
+  vim.opt.softtabstop = width -- Número de espaços ao digitar <Tab>
+  vim.opt.shiftwidth = width  -- Número de espaços usados para indentação automática
+  vim.opt.expandtab = false   -- Usa espaços em vez de tabs reais
+  print("Indent set to " .. width .. " spaces")
+end
+
+-- Comando para facilitar no modo de comando
+vim.api.nvim_create_user_command("SetIndent", function(opts)
+  SetIndent(tonumber(opts.args))
+end, { nargs = 1 })

@@ -38,6 +38,7 @@ require('lazy').setup({
   require 'plugins.which-key',
   require 'plugins.scrollbar',
   require 'plugins.vim-visual-multi',
+  require 'plugins.vim-sleuth'
 }, {
   install = {
     missing = true,
@@ -82,19 +83,6 @@ require('lazy').setup({
   },
 })
 
--- Função para configurar indentação
-function SetIndent(width)
-  vim.opt.tabstop = width     -- Número de espaços que um <Tab> representa
-  vim.opt.softtabstop = width -- Número de espaços ao digitar <Tab>
-  vim.opt.shiftwidth = width  -- Número de espaços usados para indentação automática
-  vim.opt.expandtab = false   -- Usa espaços em vez de tabs reais
-  print("Indent set to " .. width .. " spaces")
-end
-
--- Comando para facilitar no modo de comando
-vim.api.nvim_create_user_command("SetIndent", function(opts)
-  SetIndent(tonumber(opts.args))
-end, { nargs = 1 })
 
 -- Function to check if a file exists
 local function file_exists(file)
