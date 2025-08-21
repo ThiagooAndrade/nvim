@@ -24,7 +24,7 @@ return {
     local actions = require 'telescope.actions'
     local builtin = require 'telescope.builtin'
 
-    require('telescope').setup {
+    telescope.setup {
       defaults = {
         mappings = {
           i = {
@@ -41,6 +41,7 @@ return {
         find_files = {
           file_ignore_patterns = { 'node_modules', '.git', '.venv' },
           hidden = true,
+          -- theme = "dropdown"
         },
         buffers = {
           initial_mode = 'normal',

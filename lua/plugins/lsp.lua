@@ -26,6 +26,7 @@ return { -- LSP Configuration & Plugins
     },
   },
   config = function()
+    local unpack = table.unpack or unpack;
     -- Define os servidores e suas configurações
     local servers = {
       vue_ls = {
@@ -52,7 +53,10 @@ return { -- LSP Configuration & Plugins
               callSnippet = 'Replace',
             },
             telemetry = { enable = false },
-            diagnostics = { disable = { 'missing-fields' } },
+            diagnostics = {
+              globals = { 'vim' },
+              disable = { 'missing-fields' }
+            },
           },
         },
       },

@@ -53,3 +53,5 @@ vim.diagnostic.config({
   underline = {},
   float = {},
 })
+
+vim.opt.fillchars:append { eob = " " }

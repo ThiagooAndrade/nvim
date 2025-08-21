@@ -5,20 +5,22 @@ require 'core.lsp'
 require 'core.mason-path'
 
 -- Import color theme based on environment variable NVIM_THEME
-local default_color_scheme = 'tokyonight'
-local env_var_nvim_theme = os.getenv 'NVIM_THEME' or default_color_scheme
+local default_color_scheme = 'gruvbox'
+-- local env_var_nvim_theme = os.getenv 'NVIM_THEME' or default_color_scheme
 
 -- Define a table of theme modules
 local themes = {
-  nord = 'plugins.themes.nord',
-  cyberdream = 'plugins.themes.cyberdream',
-  tokyonight = 'plugins.themes.tokyonight',
-  astrotheme = 'plugins.themes.astrotheme',
-  kanagawa = 'plugins.themes.kanagawa'
+  require 'plugins.themes.nord',
+  require 'plugins.themes.cyberdream',
+  require 'plugins.themes.tokyonight',
+  require 'plugins.themes.astrotheme',
+  require 'plugins.themes.kanagawa',
+  require 'plugins.themes.gruvbox-material',
+  require 'plugins.themes.catppuccin',
 }
 
 require('lazy').setup({
-  require(themes[env_var_nvim_theme]),
+  themes,
   require 'plugins.neotree',
   require 'plugins.bufferline',
   require 'plugins.lualine',
@@ -35,7 +37,7 @@ require('lazy').setup({
   require 'plugins.indent-blankline',
   require 'plugins.which-key',
   require 'plugins.scrollbar',
-  require 'plugins.vim-visual-multi'
+  require 'plugins.vim-visual-multi',
 }, {
   install = {
     missing = true,
