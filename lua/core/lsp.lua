@@ -5,16 +5,15 @@
 
 -- Mason PATH is handled by core.mason-path
 vim.lsp.enable({
-  "lua-ls",
+  "lua_ls",
   "gopls",
-  "zls",
-  "ts-ls",
-  "rust-analyzer",
-  "intelephense",
+  "ts_ls",
   "tailwindcss",
-  "html-ls",
-  "css-ls",
-  "vue-ls",
+  "html",
+  "cssls",
+  -- "vue_ls",
+  -- "vtsls",
+  "jsonls"
 })
 
 
