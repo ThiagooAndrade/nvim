@@ -155,6 +155,13 @@ vim.keymap.set("v", "<leader>f", function()
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", false)
 end, { desc = "Format selected range", noremap = true, silent = true })
 
+-- Telescope colorscheme picker
+vim.keymap.set("n", "<leader>tt", function()
+  require("telescope.builtin").colorscheme({
+    enable_preview = true, -- preview ao vivo dos temas
+  })
+end, { desc = "Trocar tema com Telescope" })
+
 -- Função para configurar indentação
 function SetIndent(width)
   vim.opt.tabstop = width     -- Número de espaços que um <Tab> representa

@@ -69,6 +69,6 @@ return {
         },
       },
     })
-    vim.cmd [[colorscheme astrotheme]]
+    -- vim.cmd [[colorscheme astrotheme]]
   end
 }

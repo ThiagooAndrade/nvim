@@ -26,6 +26,7 @@ return { -- LSP Configuration & Plugins
     },
   },
   config = function()
+    local unpack = table.unpack or unpack;
     -- Define os servidores e suas configurações
     local tsdk_path = "/home/thiago/.nvm/versions/node/v22.16.0/lib/node_modules/typescript/lib"
 
@@ -86,7 +87,10 @@ return { -- LSP Configuration & Plugins
               callSnippet = 'Replace',
             },
             telemetry = { enable = false },
-            diagnostics = { disable = { 'missing-fields' } },
+            diagnostics = {
+              globals = { 'vim' },
+              disable = { 'missing-fields' }
+            },
           },
         },
       },
