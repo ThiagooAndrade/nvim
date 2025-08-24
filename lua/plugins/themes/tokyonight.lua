@@ -1,8 +1,12 @@
 return {
-  "folke/tokyonight.nvim",
+  'folke/tokyonight.nvim',
   lazy = false,
   priority = 1000,
-  config = function()
-    -- vim.cmd [[colorscheme tokyonight-storm]]
-  end
+  opts = {
+    transparent = false,
+    styles = {
+      sidebars = 'transparent',
+      floats = 'transparent',
+    },
+  },
 }

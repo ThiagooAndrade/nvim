@@ -1,11 +1,16 @@
 -- Standalone plugins with less than 10 lines of config go here
 return {
   {
-    "nguyenvukhang/nvim-toggler",
-    config = function() require("nvim-toggler").setup() end,
+    'nguyenvukhang/nvim-toggler',
+    config = function()
+      require('nvim-toggler').setup()
+    end,
     keys = {
-      { "<leader>i", "<cmd>lua require('nvim-toggler').toggle()<CR>", desc = "Invert value" },
+      { '<leader>i', "<cmd>lua require('nvim-toggler').toggle()<CR>", desc = 'Invert value' },
     },
+  },
+  {
+    'mg979/vim-visual-multi',
   },
   {
     -- autoclose tags
@@ -22,13 +27,6 @@ return {
   {
     -- GitHub integration for vim-fugitive
     'tpope/vim-rhubarb',
-  },
-  {
-    -- Autoclose parentheses, brackets, quotes, etc.
-    'windwp/nvim-autopairs',
-    event = 'InsertEnter',
-    config = true,
-    opts = {},
   },
   {
     -- Highlight todo, notes, etc in comments
