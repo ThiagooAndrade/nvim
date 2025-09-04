@@ -5,6 +5,8 @@ require('config.lsp')
 
 vim.g.autoformat = false
 
+vim.cmd [[colorscheme tokyonight-storm]]
+
 -- Function to check if a file exists
 local function file_exists(file)
   local f = io.open(file, 'r')
