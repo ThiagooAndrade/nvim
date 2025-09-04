@@ -1,5 +1,5 @@
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.g.mapleader = ' '                  -- Set key leader
+vim.g.maplocalleader = ' '             -- Set local key leader
 vim.o.hlsearch = true                  -- Set highlight on search
 vim.wo.number = true                   -- Make line numbers default
 vim.o.mouse = 'a'                      -- Enable mouse mode
