@@ -2,6 +2,7 @@
 return {
   {
     'nguyenvukhang/nvim-toggler',
+    lazy = false,
     config = function()
       require('nvim-toggler').setup()
     end,
@@ -11,6 +12,7 @@ return {
   },
   {
     'mg979/vim-visual-multi',
+    lazy = false,
   },
   {
     -- autoclose tags
@@ -27,19 +29,5 @@ return {
   {
     -- GitHub integration for vim-fugitive
     'tpope/vim-rhubarb',
-  },
-  {
-    -- Highlight todo, notes, etc in comments
-    'folke/todo-comments.nvim',
-    event = 'VimEnter',
-    dependencies = { 'nvim-lua/plenary.nvim' },
-    opts = { signs = false },
-  },
-  {
-    -- high-performance color highlighter
-    'norcalli/nvim-colorizer.lua',
-    config = function()
-      require('colorizer').setup()
-    end,
   },
 }

@@ -140,8 +140,6 @@ function SetIndent(width)
   vim.opt.expandtab = true -- Usa espaços em vez de tabs reais
   print('Indent set to ' .. width .. ' spaces')
 end
-
--- Comando para facilitar no modo de comando
 vim.api.nvim_create_user_command('SetIndent', function(opts)
   SetIndent(tonumber(opts.args))
 end, { nargs = 1 })
