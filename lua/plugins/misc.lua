@@ -14,10 +14,7 @@ return {
     'mg979/vim-visual-multi',
     lazy = false,
     config = function()
-      vim.g.VM_maps = {
-        ["Select Cursor Down"] = '<C-j>',
-        ["Select Cursor Up"] = '<C-k>',
-      }
+      vim.g.VM_default_mappings = 0
     end
   },
   {
