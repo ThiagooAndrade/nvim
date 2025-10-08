@@ -11,13 +11,6 @@ return {
     },
   },
   {
-    'mg979/vim-visual-multi',
-    lazy = false,
-    config = function()
-      vim.g.VM_default_mappings = 0
-    end
-  },
-  {
     -- autoclose tags
     'windwp/nvim-ts-autotag',
   },
