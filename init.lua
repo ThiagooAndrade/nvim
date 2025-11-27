@@ -5,7 +5,19 @@ require('config.lsp')
 
 vim.g.autoformat = false
 
-vim.cmd [[colorscheme tokyonight-storm]]
+vim.cmd [[colorscheme kanso-zen]]
+
+-- function Transparent(color)
+--   color = color or "everforest"
+--   vim.cmd.colorscheme(color)
+--   vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+--   vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+-- end
+-- Transparent()
+
+require('transparent').clear_prefix('NeoTree')
+require('transparent').clear_prefix('BufferLine')
+require('transparent').clear_prefix('lualine')
 
 -- Function to check if a file exists
 local function file_exists(file)
