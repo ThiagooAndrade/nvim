@@ -5,7 +5,7 @@ require('config.lsp')
 
 vim.g.autoformat = false
 
-vim.cmd [[colorscheme kanso-zen]]
+vim.cmd [[colorscheme oscura]]
 
 -- function Transparent(color)
 --   color = color or "everforest"

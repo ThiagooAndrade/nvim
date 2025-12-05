@@ -4,19 +4,26 @@ return {
     require('lualine').setup({
       options = {
         icons_enabled = true,
+        theme = "auto",
         -- Some useful glyphs:
         -- https://www.nerdfonts.com/cheat-sheet
         --        
-        section_separators = { left = '', right = '' },
+        section_separators = { left = '', right = '' },
         component_separators = { left = '', right = '' },
-        disabled_filetypes = { 'alpha', 'neo-tree', 'Avante' },
+        disabled_filetypes = {
+          'alpha',
+          'neo-tree',
+          'Avante',
+          statusline = {},
+          winbar = {},
+        },
         always_divide_middle = true,
       },
       sections = {
         lualine_a = { 'mode' },
         lualine_b = { 'branch' },
         lualine_c = { 'filename' },
-        lualine_x = { 'encoding', 'fileformat', 'filetype' },
+        lualine_x = { 'filetype' },
         lualine_y = { 'progress' },
         lualine_z = { 'location' }
       },
