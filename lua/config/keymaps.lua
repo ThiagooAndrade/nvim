@@ -143,3 +143,6 @@ end
 vim.api.nvim_create_user_command('SetIndent', function(opts)
   SetIndent(tonumber(opts.args))
 end, { nargs = 1 })
+
+-- Aerial nvim
+vim.keymap.set("n", "<leader>a", "<cmd>AerialToggle!<CR>")
