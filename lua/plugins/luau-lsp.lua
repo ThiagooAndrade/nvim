@@ -8,15 +8,15 @@ return {
       end)
     end
 
-    -- if rojo_project() then
-    --   vim.filetype.add {
-    --     extension = {
-    --       lua = function(path)
-    --         return path:match "%.nvim%.lua$" and "lua" or "luau"
-    --       end,
-    --     },
-    --   }
-    -- end
+    if rojo_project() then
+      vim.filetype.add {
+        extension = {
+          lua = function(path)
+            return path:match "%.nvim%.lua$" and "lua" or "luau"
+          end,
+        },
+      }
+    end
 
     require('luau-lsp').setup({
       platform = {
@@ -52,18 +52,8 @@ return {
         port = 3667,
       },
       server = {
-        -- path = vim.fn.expand("~/.local/share/nvim/mason/bin/luau-lsp"),
+        path = vim.fn.expand("~/.local/share/nvim/mason/bin/luau-lsp"),
         -- base_luaurc = nil,
-      },
-    })
-
-    vim.lsp.config("luau-lsp", {
-      settings = {
-        ["luau-lsp"] = {
-          completion = {
-            fillCallArguments = false, -- disable arguments snippets when completing a function call
-          },
-        },
       },
     })
 
