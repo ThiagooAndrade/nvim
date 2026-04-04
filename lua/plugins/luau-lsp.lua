@@ -22,6 +22,10 @@ return {
       platform = {
         type = "roblox",
       },
+      completion = {
+        enabled = true,
+        autocompleteEnd = true,
+      },
       sourcemap = {
         enabled = true,
         autogenerate = true,
@@ -55,7 +59,18 @@ return {
         path = vim.fn.expand("~/.local/share/nvim/mason/bin/luau-lsp"),
         -- base_luaurc = nil,
       },
+      autocompleteEnd = true,
     })
+
+    -- vim.lsp.config("luau-lsp", {
+    --   settings = {
+    --     ["luau-lsp"] = {
+    --       completion = {
+    --         fillCallArguments = true, -- disable arguments snippets when completing a function call
+    --       },
+    --     },
+    --   },
+    -- })
 
     local schemas = {
       {

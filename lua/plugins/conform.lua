@@ -14,6 +14,8 @@ return {
       html = { "prettier" },
       css = { "prettier" },
       scss = { "prettier" },
+      luau = { "stylua" },
+      lua = { "stylua" },
     },
     formatters = {
       prettier = {
